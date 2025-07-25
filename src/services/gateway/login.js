@@ -1,7 +1,7 @@
 
 // src/services/gateway/login.js
 import axios from "axios"
-import { API_ENDPOINTS } from "../utils/endpoints"
+import { API_ENDPOINTS } from "../../utils/endpoints"
 
 export const loginUser = async ({ username, password }) => {
   try {

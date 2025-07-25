@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import Link from "next/link"
 
 export default function Home() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
@@ -69,7 +70,7 @@ export default function Home() {
 
             {/* CTA Buttons with Hover Effects */}
             <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
-              <a
+              <Link
                 href="/signup"
                 className="group relative px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl font-bold text-lg text-white overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/25"
               >
@@ -80,7 +81,7 @@ export default function Home() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                   </svg>
                 </span>
-              </a>
+              </Link>
               
               <a
                 href="#pricing"

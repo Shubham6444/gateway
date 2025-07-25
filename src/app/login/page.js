@@ -3,11 +3,35 @@
 import { useState } from "react"
 import { loginUser } from "@/services/gateway/login"
 import Cookies from "js-cookie"
+import Link from "next/link"
+import { useEffect } from "react"
 
+import { useRouter } from "next/navigation"
+import { fetchUserInfo } from "@/services/gateway/user"
 export default function LoginPage() {
   const [formData, setFormData] = useState({ username: "", password: "" })
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
+  const router = useRouter()
+
+   // ✅ Redirect if user is already logged in
+    useEffect(() => {
+      const checkLogin = async () => {
+        const token = Cookies.get("token")
+        if (token) {
+          try {
+            const user = await fetchUserInfo()
+            if (user?.username) {
+              router.replace("/dashboard")
+            }
+          } catch (err) {
+            // Token invalid or fetch failed — stay on signup
+          }
+        }
+      }
+  
+      checkLogin()
+    }, [])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -31,7 +55,7 @@ export default function LoginPage() {
 
 
     return (
-        <div className="min-h-screen relative overflow-hidden">
+        <div className="min-h-screen relative overflow-hidden  mt-14">
             {/* Animated Background */}
             <div className="fixed inset-0 bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900">
                 <div className={`absolute inset-0 bg-[url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")] opacity-20`}></div>
@@ -101,9 +125,9 @@ export default function LoginPage() {
                                     <input type="checkbox" className="w-4 h-4 text-blue-600 bg-white/10 border-white/20 rounded focus:ring-blue-500" />
                                     <span className="ml-2 text-sm text-white/60">Remember me</span>
                                 </label>
-                                <a href="#" className="text-sm text-blue-400 hover:text-blue-300 transition-colors">
+                                <Link href="#" className="text-sm text-blue-400 hover:text-blue-300 transition-colors">
                                     Forgot password?
-                                </a>
+                                </Link>
                             </div>
 
                             <button
@@ -134,9 +158,9 @@ export default function LoginPage() {
                         <div className="mt-8 text-center">
                             <p className="text-white/60">
                                 {"Don't have an account? "}
-                                <a href="/signup" className="text-blue-400 hover:text-blue-300 font-semibold transition-colors">
+                                <Link href="/signup" className="text-blue-400 hover:text-blue-300 font-semibold transition-colors">
                                     Sign up
-                                </a>
+                                </Link>
                             </p>
                         </div>
                     </div>

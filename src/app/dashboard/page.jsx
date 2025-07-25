@@ -3,14 +3,22 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { fetchUserInfo } from '@/services/gateway/user';
-import { ArrowRight, Server, Globe, Mail, MessageSquare, Code } from 'lucide-react';
-
-const services = [
+import { ArrowRight, Server, Globe, Mail, MessageSquare, Code, FolderGit2 } from 'lucide-react';
+ 
+ const services = [
   {
+    name: 'File Manager',
+    description: 'Manage your files and folders with an integrated editor.',
+    icon: <FolderGit2 size={32} className="text-purple-400" />,
+    href: '/users/editor',
+    gradient: 'from-purple-500/20 to-indigo-500/20',
+    border: 'border-purple-500/30'
+  },
+   {
     name: 'VPS Containers',
     description: 'Scalable, high-performance container hosting.',
     icon: <Server size={32} className="text-blue-400" />,
-    href: '/dashboard/vps',
+    href: '/vps',
     gradient: 'from-blue-500/20 to-cyan-500/20',
     border: 'border-blue-500/30'
   },

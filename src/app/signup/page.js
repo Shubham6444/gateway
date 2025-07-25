@@ -1,17 +1,47 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
+import Cookies from "js-cookie"
+import { signupUser } from "@/services/gateway/signup"
 
 export default function SignupPage() {
   const [isLoading, setIsLoading] = useState(false)
   const [formData, setFormData] = useState({ name: "", email: "", password: "" })
-
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    setIsLoading(true)
-    // Simulate API call
-    setTimeout(() => setIsLoading(false), 2000)
+  const router = useRouter()
+useEffect(() => {
+  const token = Cookies.get("token")
+  if (token) {
+    router.replace("/dashboard")
   }
+}, [])
+
+const handleSubmit = async (e) => {
+  e.preventDefault()
+  setIsLoading(true)
+
+  try {
+    const res = await signupUser({
+      name: formData.name,
+      email: formData.email,
+      password: formData.password,
+    })
+
+    // Store token in cookie
+    if (res.token) {
+      Cookies.set("token", res.token)
+      router.replace("/dashboard")
+    } else {
+      alert("Signup failed")
+    }
+  } catch (err) {
+    alert(err.message)
+  } finally {
+    setIsLoading(false)
+  }
+}
+
 
   return (
     <div className="min-h-screen relative overflow-hidden mt-8">
@@ -104,13 +134,13 @@ export default function SignupPage() {
                 <input id="terms" type="checkbox" className="w-4 h-4 text-emerald-600 bg-white/10 border-white/20 rounded focus:ring-emerald-500" required />
                 <label htmlFor="terms" className="ml-2 text-sm text-white/60">
                   I agree to the{" "}
-                  <a href="#" className="text-emerald-400 hover:text-emerald-300 transition-colors">
+                  <Link href="#" className="text-emerald-400 hover:text-emerald-300 transition-colors">
                     Terms of Service
-                  </a>{" "}
+                  </Link>{" "}
                   and{" "}
-                  <a href="#" className="text-emerald-400 hover:text-emerald-300 transition-colors">
+                  <Link href="#" className="text-emerald-400 hover:text-emerald-300 transition-colors">
                     Privacy Policy
-                  </a>
+                  </Link>
                 </label>
               </div>
 
@@ -142,9 +172,9 @@ export default function SignupPage() {
             <div className="mt-8 text-center">
               <p className="text-white/60">
                 Already have an account?{" "}
-                <a href="/login" className="text-emerald-400 hover:text-emerald-300 font-semibold transition-colors">
+                <Link href="/login" className="text-emerald-400 hover:text-emerald-300 font-semibold transition-colors">
                   Sign in
-                </a>
+                </Link>
               </p>
             </div>
           </div>

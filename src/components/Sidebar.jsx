@@ -2,11 +2,12 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Search, LayoutDashboard, Server, Globe, Mail, MessageSquare, Settings, LifeBuoy } from 'lucide-react';
-
-const services = [
-  { name: 'Dashboard', icon: <LayoutDashboard size={20} />, href: '/dashboard' },
-  { name: 'VPS Containers', icon: <Server size={20} />, href: '/dashboard/vps' },
+import { Search, LayoutDashboard, Server, Globe, Mail, MessageSquare, Settings, LifeBuoy, FolderGit2 } from 'lucide-react';
+ 
+ const services = [
+   { name: 'Dashboard', icon: <LayoutDashboard size={20} />, href: '/dashboard' },
+   { name: 'File Manager', icon: <FolderGit2 size={20} />, href: '/users/editor' },
+  { name: 'VPS Containers', icon: <Server size={20} />, href: '/vps' },
   { name: 'Web Hosting', icon: <Globe size={20} />, href: '/dashboard/hosting' },
   { name: 'API Services', icon: <Globe size={20} />, href: '/dashboard/api' },
   { name: 'Email Services', icon: <Mail size={20} />, href: '/dashboard/email' },
@@ -27,7 +28,7 @@ export default function Sidebar() {
   );
 
   return (
-    <aside className="fixed top-0 left-0 w-64 h-full bg-black/30 backdrop-blur-lg border-r border-white/10 z-40 flex flex-col">
+    <aside className="fixed top-0 left-0 w-64 h-full bg-black/30 backdrop-blur-lg border-r border-white/10 z-40 flex flex-col mt-16">
       <div className="p-4 border-b border-white/10">
         <div className="relative">
           <Search size={20} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40" />

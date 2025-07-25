@@ -10,7 +10,7 @@ export default function DashboardLayout({ children }) {
   return (
     <ProtectedRoute>
       <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 text-white">
-        <Header />
+       
         <Sidebar />
         <main className="ml-64 pt-16">
           <div className="p-8">{children}</div>
